@@ -47,15 +47,18 @@ void applicationStart(int argc, char *argv[])
 
 	// Initialize the QT application
 	if(bRes){
-			QCoreApplication app(argc, argv);
+		QCoreApplication app(argc, argv);
 
+        // Delete previous log
 		QString szFilePath = getLogFilePath();
 		qDebug("Log will be in: %s", qPrintable(szFilePath));
 		QFile fileLog(szFilePath);
 		fileLog.remove();
 
+        // Install log handler in file
 		qInstallMessageHandler(logger);
 
+        // Start somes thread with event loop to reproduce the problem
 		MyThread thread;
 		thread.start();
 
@@ -120,7 +123,16 @@ bool runService(int argc, char *argv[])
 
 int main(int argc, char **argv)
 {
+    QString szMode = "service";
+    if(argc > 1){
+        szMode = "no-service";
+    }
+
 	qDebug("Starting application");
-	runService(argc, argv);
+    if(szMode == "service"){
+	    runService(argc, argv);
+    }else{
+	    applicationStart(argc, argv);
+    }
 	qDebug("Stopping application");
 }

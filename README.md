@@ -39,7 +39,7 @@ cmake -G "Unix Makefiles" -DCMAKE_TOOLCHAIN_FILE=./toolchain-platform-unix-linux
 make
 ```
 
-Run project for a short time :
+Run project in service mode for a short time :
 
 ```
 ./qt-service-test && sleep 2 && killall qt-service-test
@@ -80,4 +80,10 @@ QThreadPipe: internal error, wakeUps.testAndSetRelease(1, 0) failed!
 QThreadPipe: internal error, wakeUps.testAndSetRelease(1, 0) failed!
 QThreadPipe: internal error, wakeUps.testAndSetRelease(1, 0) failed!
 QThreadPipe: internal error, wakeUps.testAndSetRelease(1, 0) failed!
+```
+
+The problem is not present when not in service mode
+
+```
+./qt-service-test no-service
 ```
