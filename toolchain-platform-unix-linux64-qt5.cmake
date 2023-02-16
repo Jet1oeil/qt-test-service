@@ -1,6 +1,6 @@
 # here is the target environment located
 set(CMAKE_PREFIX_PATH
-	/home/ebeuque/Developpement/Lib/startdeps-ve/ve-linux64/qt5-5.15.8-noglib/release
+	./qt-release
 )
 
 # adjust the default behaviour of the FIND_XXX() commands:
