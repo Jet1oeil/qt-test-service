@@ -39,14 +39,45 @@ cmake -G "Unix Makefiles" -DCMAKE_TOOLCHAIN_FILE=./toolchain-platform-unix-linux
 make
 ```
 
-Run project :
+Run project for a short time :
 
 ```
-./qt-service-test && sleep 2 &&  killall qt-service-test && ls -lh app.log 
+./qt-service-test && sleep 2 && killall qt-service-test
 ```
 
-When the problem occurs the app.log is huge with many line :
+When the problem occurs the app.log is huge :
 
 ```
+ls -l app.log 
+-rw-rw-rw- 1 ebeuque ebeuque 37101769 févr. 16 15:24 app.log
+
+```
+
+And it contains a lot of error log:
+
+```
+Starting the main loop
+Starting the thread
+Starting the thread
+QThreadPipe: internal error, wakeUps.testAndSetRelease(1, 0) failed!
+QThreadPipe: internal error, wakeUps.testAndSetRelease(1, 0) failed!
+QThreadPipe: internal error, wakeUps.testAndSetRelease(1, 0) failed!
+QThreadPipe: internal error, wakeUps.testAndSetRelease(1, 0) failed!
+QThreadPipe: internal error, wakeUps.testAndSetRelease(1, 0) failed!
+QThreadPipe: internal error, wakeUps.testAndSetRelease(1, 0) failed!
+QThreadPipe: internal error, wakeUps.testAndSetRelease(1, 0) failed!
+QThreadPipe: internal error, wakeUps.testAndSetRelease(1, 0) failed!
+QThreadPipe: internal error, wakeUps.testAndSetRelease(1, 0) failed!
+QThreadPipe: internal error, wakeUps.testAndSetRelease(1, 0) failed!
+QThreadPipe: internal error, wakeUps.testAndSetRelease(1, 0) failed!
+QThreadPipe: internal error, wakeUps.testAndSetRelease(1, 0) failed!
+QThreadPipe: internal error, wakeUps.testAndSetRelease(1, 0) failed!
+QThreadPipe: internal error, wakeUps.testAndSetRelease(1, 0) failed!
+QThreadPipe: internal error, wakeUps.testAndSetRelease(1, 0) failed!
+QThreadPipe: internal error, wakeUps.testAndSetRelease(1, 0) failed!
+QThreadPipe: internal error, wakeUps.testAndSetRelease(1, 0) failed!
+QThreadPipe: internal error, wakeUps.testAndSetRelease(1, 0) failed!
+QThreadPipe: internal error, wakeUps.testAndSetRelease(1, 0) failed!
+QThreadPipe: internal error, wakeUps.testAndSetRelease(1, 0) failed!
 QThreadPipe: internal error, wakeUps.testAndSetRelease(1, 0) failed!
 ```
