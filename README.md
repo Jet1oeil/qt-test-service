@@ -40,11 +40,13 @@ Get project:
 git clone https://github.com/Jet1oeil/qt-test-service.git
 ```
 
+Modify the toolchain-platform-unix-linux64-qt5.cmake to set the Qt's path
+
 Compile project:
 
 ```
-cmake -G "Unix Makefiles" -DCMAKE_TOOLCHAIN_FILE=../toolchain-platform-unix-linux64-qt5.cmake .. && make
-
+cmake -G "Unix Makefiles" -DCMAKE_TOOLCHAIN_FILE=./toolchain-platform-unix-linux64-qt5.cmake .
+make
 ```
 
 Run project :
