@@ -2,7 +2,9 @@
 
 This projet help to reproduce a problem when applciation is started in service mode on linux, and when glib is not used.
 
-## Installation
+Bug is reproted here: https://bugreports.qt.io/browse/QTBUG-111317
+
+## Installation
 
 Prerequisite
 
@@ -16,7 +18,9 @@ Get project:
 git clone https://github.com/Jet1oeil/qt-test-service.git
 ```
 
-Build QtBase without Glib :
+### Build Qt
+
+Build QtBase without Glib:
 
 ```
 git clone https://github.com/qt/qt5.git
@@ -30,14 +34,17 @@ make
 make install
 ```
 
-Modify the toolchain-platform-unix-linux64-qt5.cmake to set the Qt's path
+### Compilation
 
-Compile project:
+Modify the toolchain-platform-unix-linux64-qt5.cmake to set the Qt's path.
+
+Compile the project with the toolchain file:
 
 ```
 cmake -G "Unix Makefiles" -DCMAKE_TOOLCHAIN_FILE=./toolchain-platform-unix-linux64-qt5.cmake .
 make
 ```
+## Running
 
 Run project in service mode for a short time :
 
