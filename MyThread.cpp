@@ -1,8 +1,9 @@
 
 #include "MyThread.h"
 
-MyThread::MyThread() {
+MyThread::MyThread(const QString& szName) {
     moveToThread(this);
+	setObjectName(szName);
 }    
 
 void MyThread::onTimeOut()

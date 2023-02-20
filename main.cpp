@@ -16,10 +16,16 @@ QString getLogFilePath()
 
 void logger(QtMsgType type, const QMessageLogContext& context, const QString& msg)
 {
+	QThread* pThread = QThread::currentThread();
+
+	QString szThreadName = (pThread->objectName().isEmpty() ? QString::asprintf("%p", pThread) : pThread->objectName());
+	QString szThreadDesc = QString("[PID:%0, THREAD %1] ").arg(getpid()).arg(szThreadName);
+
 	// Write in file
 	QString szFilePath = getLogFilePath();
 	QFile fileLog(szFilePath);
 	if(fileLog.open(QFile::WriteOnly | QFile::Append | QFile::Text)){
+		fileLog.write(szThreadDesc.toUtf8());
 		QByteArray buf = msg.toUtf8();
 		fileLog.write(buf.constData(), buf.size());
 		fileLog.write("\n");
@@ -28,7 +34,8 @@ void logger(QtMsgType type, const QMessageLogContext& context, const QString& ms
 
 	// Write in console
 	QByteArray localMsg = msg.toLocal8Bit();
-	fprintf(stderr, "%s\n", localMsg.constData());
+	//fprintf(stdout, "LOG %s %s\n", qPrintable(szThreadDesc), localMsg.constData());
+	fprintf(stderr, "LOG %s %s\n", qPrintable(szThreadDesc), localMsg.constData());
 
 }
 
@@ -49,20 +56,24 @@ void applicationStart(int argc, char *argv[])
 	if(bRes){
 		QCoreApplication app(argc, argv);
 
-        // Delete previous log
+		// Delete previous log
 		QString szFilePath = getLogFilePath();
 		qDebug("Log will be in: %s", qPrintable(szFilePath));
 		QFile fileLog(szFilePath);
 		fileLog.remove();
 
-        // Install log handler in file
+		// Install log handler in file
 		qInstallMessageHandler(logger);
 
-        // Start somes thread with event loop to reproduce the problem
-		MyThread thread;
+		// Start somes thread with event loop to reproduce the problem
+		qDebug("Creating thread 1");
+		MyThread thread("Thread1");
+		qDebug("Creating thread 1 done");
 		thread.start();
 
-		MyThread thread2;
+		qDebug("Creating thread 2");
+		MyThread thread2("Thread2");
+		qDebug("Creating thread 2 done");
 		thread2.start();
 
 		qDebug("Starting the main loop");
@@ -123,16 +134,16 @@ bool runService(int argc, char *argv[])
 
 int main(int argc, char **argv)
 {
-    QString szMode = "service";
-    if(argc > 1){
-        szMode = "no-service";
-    }
+	QString szMode = "service";
+	if(argc > 1){
+		szMode = "no-service";
+	}
 
 	qDebug("Starting application");
-    if(szMode == "service"){
-	    runService(argc, argv);
-    }else{
-	    applicationStart(argc, argv);
-    }
+	if(szMode == "service"){
+		runService(argc, argv);
+	}else{
+		applicationStart(argc, argv);
+	}
 	qDebug("Stopping application");
 }

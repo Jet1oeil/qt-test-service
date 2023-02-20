@@ -8,7 +8,7 @@ class MyThread : public QThread
 {
     Q_OBJECT
 public:
-    MyThread();
+    MyThread(const QString& szName);
 
 private slots:
     void onTimeOut();
